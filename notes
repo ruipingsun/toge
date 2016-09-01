@@ -1,4 +1,38 @@
 
+      nohup sh ./full_bench.put dc1onlyput  > ./report/full_bench.out.dc1onlyput  2>&1 &
+        nohup sh ./full_bench.get dc1onlyget  > ./report/full_bench.out.dc1onlyget  2>&1 &
+
+        nohup sh ./full_bench.put-extrem dc1onlyputextreme  > ./report/full_bench.out.dc1onlyput-extrem  2>&1 &
+        nohup sh ./full_bench.get-extrem dc1onlygetextreme  > ./report/full_bench.out.dc1onlyget-extrem  2>&1 &
+
+        nohup sh ./full_bench.put-background  dc1onlyputbackgroud  > ./report/full_bench.out.dc1onlyput-background  2>&1 &
+
+
+        to cp results back to master:
+           client:
+                cd results
+                tar cvf /tmp/r.tar .
+                "cp" /tmp/r.tar to master
+
+           master:
+                cd result
+                mkdir cloudian
+                cd cloudian
+                tar xvf /tmp/r.tar
+
+  Util:
+        remove all -r :
+                s3cmd ls  | awk '{print "./s3cmd-remove " $3}' > com
+                sh ./com
+        du  all:
+                s3cmd ls  | awk '{print "s3cmd du  " $3}' > com
+                sh ./com
+
+        remove all empty buckets  :
+                s3cmd ls  | awk '{print "s3cmd rb  " $3}' > com
+                sh ./com
+
+
 ============================================================================
 ====PartI Cluster Operations ===============================================
 ============================================================================

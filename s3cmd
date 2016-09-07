@@ -1,0 +1,64 @@
+1. Inatall 
+
+	!!! prepare  s3load first   !!!!! 
+
+	yum install python-setuptools
+
+	cd /home 
+
+ 	wget http://ufpr.dl.sourceforge.net/project/s3tools/s3cmd/1.6.1/s3cmd-1.6.1.tar.gz
+	tar xvf s3cmd-1.6.1.tar.gz
+	cd s3cmd-1.6.1
+	python setup.py install
+
+	which s3cmd 
+
+	cd /home 
+	rm -rf s3cmd* 
+
+2.  Config 
+
+	cat /root/.s3cfg
+	[default]
+	access_key = 00cfcdf693e263daa1da
+	host_base = s3-ged.gedcloud.com
+	host_bucket = %(bucket)s.s3-ged.gedcloud.com
+	secret_key = 08C3IoKMm/vu8up9M0Kkjda5xdPARoXKA9TAMOYB
+	signature_v2 = True
+	use_https = False
+
+
+ 	note:  host_base and host_bucket ==> IP of end-point 
+
+	#  nslookup  s3-ged.gedcloud.com
+		Name:	lb.gedcloud.com
+		Address: 10.10.0.131
+
+	# nslookup  s3-ged.gedcloud.com
+		Name:	lb.gedcloud.com
+		Address: 10.10.0.131
+
+3. Operations: 
+	options:
+		-r 
+		-f 
+	bucket: 
+		s3cmd mb s3://s3cmdtest_buket1 
+		s3cmd rb s3://s3cmdtest_buket1 
+      		s3cmd du s3://s3cmdtest_buket1
+      		s3cmd info s3://s3cmdtest_buket1
+
+	put /get  
+		cp /etc/passwd testobj 
+      		s3cmd put testobj  s3://s3cmdtest_buket1/obj1  
+      		s3cmd put testobj  s3://s3cmdtest_buket1/obj2  
+
+      		s3cmd get s3://s3cmdtest_buket1/obj2   ./a 
+		diff a testobj 
+			
+	list: 
+		s3cmd ls
+		s3cmd ls s3://s3cmdtest_buket1
+	delete obj 
+      		s3cmd del  s3://s3cmdtest_buket1/obj1
+
